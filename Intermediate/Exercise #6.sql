@@ -1,13 +1,12 @@
 SELECT 
 e.employeeNumber AS ID,
 CONCAT_WS(' ', e.firstName, e.lastName)'Employee',
-IF(COUNT(c.customerNumber)>=6,
-    e.salary*0.3,
-IF(COUNT(c.customerNumber)>0,
-    e.salary*0.1,
-    e.salary=0
-    )
-) AS 'Bonus'
+(CASE
+    WHEN COUNT(c.customerNumber)>=6 THEN e.salary*0.3
+    WHEN COUNT(c.customerNumber)>0 THEN e.salary*0.1
+    ELSE e.salary = 0
+END
+)  AS 'Bonus'
 FROM `employees` AS e
 LEFT JOIN `customers` AS c
 ON e.employeeNumber = c.salesRepEmployeeNumber
