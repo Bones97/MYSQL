@@ -1,3 +1,7 @@
+CREATE DATABASE media;
+
+USE media;
+
 CREATE TABLE users(
     user_id INT(11) auto_increment,
     username VARCHAR(100),
@@ -12,7 +16,7 @@ CREATE TABLE roles(
     role_id INT(11) auto_increment,
     role_name VARCHAR(100),
     PRIMARY KEY(role_id)
-)
+);
 
 CREATE TABLE articles(
     art_id    INT(11) auto_increment,
@@ -21,10 +25,22 @@ CREATE TABLE articles(
     user_id INT(11),
     category INT(11),
     PRIMARY KEY (art_id)
-)
+);
 
 CREATE TABLE categories(
     category_id INT(11) auto_increment,
     category_name VARCHAR(100),
     PRIMARY KEY (category_id)
-)
+);
+
+ALTER TABLE users
+ADD FOREIGN KEY (role)
+REFERENCES roles(role_id);
+
+ALTER TABLE articles
+ADD FOREIGN KEY (user_id)
+REFERENCES users(user_id);
+
+ALTER TABLE articles
+ADD FOREIGN KEY (category)
+REFERENCES categories(category_id);
